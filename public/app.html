@@ -647,7 +647,7 @@
 
                 <div className="mb-8">
                     <h3 className="text-[18px] text-primary font-bold mb-4">Key metrics</h3>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 gap-3">
                         {[
                             { label: 'Start', val: 'May 23' }, { label: 'End', val: 'May 30' },
                             { label: 'Duration', val: '7 days' }, { label: 'Pain days', val: '3 days' }
@@ -731,8 +731,8 @@
                             { label: 'Diet Recommendations', val: '3 phases' },
                             { label: 'Solar-Term Food', val: 'Minor Heat' },
                             { label: 'Menstrual & TCM Education', val: '24 lessons' }
-                        ].map((item) => (
-                            <button key={item.label} onClick={() => setView(item.label === 'Constitution Result' ? 'result' : item.label === 'Diet Recommendations' ? 'diet' : item.label === 'Solar-Term Food' ? 'food' : 'education')} className="w-full rounded-[18px] border border-[#E8D9C9] bg-[rgba(255,255,255,0.55)] px-3.5 py-2.5 text-left shadow-[0_2px_10px_rgba(116,89,66,0.03)] transition-colors hover:bg-[rgba(255,255,255,0.8)]">
+                        ].map((item, index) => (
+                            <button key={item.label} onClick={() => setView(item.label === 'Constitution Result' ? 'result' : item.label === 'Diet Recommendations' ? 'diet' : item.label === 'Solar-Term Food' ? 'food' : 'education')} className={`w-full rounded-[18px] border border-[#E8D9C9] bg-[rgba(255,255,255,0.55)] px-3.5 py-2.5 text-left shadow-[0_2px_10px_rgba(116,89,66,0.03)] transition-colors hover:bg-[rgba(255,255,255,0.8)] ${index < 3 ? 'h-[63.6px]' : ''}`}>
                                 <div className="flex items-center gap-4">
                                     <div className="h-6 w-6 rounded-full bg-[#DCE9D0]" />
                                     <div className="min-w-0 flex-1">
@@ -1177,7 +1177,7 @@
         };
 
         // --- 10. 课程首页 (Education) ---
-        const EducationPage = ({ setView }) => {
+        const EducationPage = ({ setView, goBack }) => {
             const [selectedTab, setSelectedTab] = useState('First period');
 
             const tabs = ['First period', 'Basics', 'Cramps', 'Mood', 'TCM', 'Uterine cold', 'Qi & Blood', 'Diet myths'];
@@ -1186,13 +1186,14 @@
                     title: 'What is menstruation?',
                     minutes: '6 min',
                     image: '/src/picture/what is menstruation.png',
-                    accent: false,
+                    variant: 'split',
                     onClick: () => setView('article')
                 },
                 {
                     title: 'How do I use a sanitary pad?',
                     minutes: '4 min',
                     image: '/src/picture/how do i use a.png',
+                    variant: 'overlay',
                     accent: true,
                     onClick: () => setView('article')
                 },
@@ -1200,40 +1201,43 @@
                     title: 'Can I bathe during my period?',
                     minutes: '5 min',
                     image: '/src/picture/can i bathe during my period.png',
-                    accent: false,
+                    variant: 'overlay',
                     onClick: () => setView('article')
                 },
                 {
                     title: 'What is uterine cold?',
                     minutes: '7 min',
                     image: '/src/picture/what is uterine.png',
-                    accent: false,
+                    variant: 'split',
                     onClick: () => setView('article')
                 },
                 {
                     title: 'What are Qi and Blood?',
                     minutes: '8 min',
                     image: '/src/picture/what are qi.png',
-                    accent: false,
+                    variant: 'split',
                     onClick: () => setView('article')
                 },
                 {
                     title: 'Period diet mistakes',
                     minutes: '7 min',
                     image: '/src/picture/period diet mistakes.png',
-                    accent: false,
+                    variant: 'overlay',
                     onClick: () => setView('article')
                 }
             ];
 
             return (
-                <div className="px-5 pt-3 pb-24 bg-[#F8F4EE] min-h-screen">
-                    <header className="mt-1">
-                        <h1 className="text-[26px] leading-tight font-bold text-[#332A24]">Education</h1>
-                        <p className="text-[12px] text-secondary mt-1">Menstrual basics and TCM mini-lessons.</p>
+                <div className="px-5 pt-3 pb-[12px] bg-[#F8F4EE] min-h-screen">
+                    <header className="flex items-center gap-3 mt-1">
+                        <BackButton onClick={goBack} />
+                        <div>
+                            <h1 className="text-[26px] leading-tight font-bold text-[#332A24]">Education</h1>
+                            <p className="text-[12px] text-secondary mt-1">Menstrual basics and TCM mini-lessons.</p>
+                        </div>
                     </header>
 
-                    <div className="grid grid-cols-3 gap-x-2.5 gap-y-2.5 mt-4">
+                    <div className="grid grid-cols-3 gap-x-3 gap-y-1.5 mt-3">
                         {tabs.map(tab => (
                             <Pill
                                 key={tab}
@@ -1245,25 +1249,44 @@
                         ))}
                     </div>
 
-                    <h3 className="font-bold text-[16px] text-[#332A24] mt-5 mb-3">Featured lessons</h3>
+                    <h3 className="font-bold text-[18px] text-[#332A24] mt-2.5 mb-2.5">Featured lessons</h3>
                     <div className="grid grid-cols-2 gap-3">
-                        {lessons.map(lesson => (
-                            <button
-                                key={lesson.title}
-                                onClick={lesson.onClick}
-                                className={`relative h-[125px] rounded-[22px] overflow-hidden card-shadow border cursor-pointer text-left transition-transform active:scale-[0.99] ${lesson.accent ? 'border-[#2EA0FF]' : 'border-[#F2E9DF]'}`}
-                            >
-                                <img src={lesson.image} alt={lesson.title} className="absolute inset-0 h-full w-full object-cover" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/58 via-black/16 to-transparent"></div>
-                                <div className="absolute inset-x-0 bottom-0 p-3.5 text-white">
-                                    <p className="text-[13px] font-bold leading-tight drop-shadow-[0_1px_4px_rgba(0,0,0,0.22)]">{lesson.title}</p>
-                                    <div className="flex items-center justify-between mt-2.5">
-                                        <span className="text-[9px] text-white/80">{lesson.minutes}</span>
-                                        <Icon name="heart" size={13} className="text-white/90" />
+                        {lessons.map(lesson =>
+                            lesson.variant === 'split' ? (
+                                <button
+                                    key={lesson.title}
+                                    onClick={lesson.onClick}
+                                    className="text-left bg-white rounded-[24px] overflow-hidden card-shadow border border-[#F3E9DE] cursor-pointer transition-transform active:scale-[0.99]"
+                                >
+                                    <div className="h-[80px] overflow-hidden">
+                                        <img src={lesson.image} alt={lesson.title} className="h-full w-full object-cover" />
                                     </div>
-                                </div>
-                            </button>
-                        ))}
+                                    <div className="px-4 py-2.5 flex flex-col justify-between min-h-[72px]">
+                                        <p className="text-[13px] font-bold text-[#332A24] leading-tight">{lesson.title}</p>
+                                        <div className="flex items-center justify-between mt-2">
+                                            <span className="text-[10px] text-secondary">{lesson.minutes}</span>
+                                            <Icon name="heart" size={14} className="text-[#E4A5A5]" />
+                                        </div>
+                                    </div>
+                                </button>
+                            ) : (
+                                <button
+                                    key={lesson.title}
+                                    onClick={lesson.onClick}
+                                    className={`relative h-[152px] rounded-[24px] overflow-hidden card-shadow border cursor-pointer text-left transition-transform active:scale-[0.99] ${lesson.accent ? 'border-[#2EA0FF]' : 'border-[#F3E9DE]'}`}
+                                >
+                                    <img src={lesson.image} alt={lesson.title} className="absolute inset-0 h-full w-full object-cover" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/18 to-transparent"></div>
+                                    <div className="absolute inset-x-0 bottom-0 p-3.5 text-white">
+                                        <p className="text-[13px] font-bold leading-tight drop-shadow-[0_1px_4px_rgba(0,0,0,0.22)]">{lesson.title}</p>
+                                        <div className="flex items-center justify-between mt-2.5">
+                                            <span className="text-[10px] text-white/80">{lesson.minutes}</span>
+                                            <Icon name="heart" size={14} className="text-white/90" />
+                                        </div>
+                                    </div>
+                                </button>
+                            )
+                        )}
                     </div>
                 </div>
             )
@@ -1358,13 +1381,13 @@
                 </div>
 
                 <div>
-                    <h3 className="text-[18px] text-primary font-bold mb-4">My space</h3>
+                    <h3 className="text-[18px] text-primary font-bold mb-2.5 leading-none">My space</h3>
                     <div className="flex flex-col gap-3">
                         <div onClick={() => setView('health_record')} className="bg-white rounded-[24px] border border-[#EAE2D8] flex items-center justify-between p-[22px] cursor-pointer hover:bg-[#FDFCFB]">
                             <div className="flex items-center gap-4"><div className="w-5 h-5 rounded-full bg-[#E4ECD7]"></div><span className="text-[15px] font-bold text-primary">Personal Health Record</span></div>
                             <span className="text-[13px] text-[#B8B0A8] flex items-center gap-1">Edit <Icon name="chevron-right" size={16} className="opacity-60" /></span>
                         </div>
-                        <div onClick={() => setView('constitution_report')} className="bg-white rounded-[24px] border border-[#EAE2D8] flex items-center justify-between p-[22px] cursor-pointer hover:bg-[#FDFCFB]">
+                        <div onClick={() => setView('constitution_report')} className="h-[68.1px] bg-white rounded-[24px] border border-[#EAE2D8] flex items-center justify-between px-[22px] py-0 cursor-pointer hover:bg-[#FDFCFB]">
                             <div className="flex items-center gap-4"><div className="w-5 h-5 rounded-full bg-[#E4ECD7]"></div><span className="text-[15px] font-bold text-primary">My Constitution Report</span></div>
                             <span className="text-[13px] text-[#B8B0A8] flex items-center gap-1">Latest: Cold <Icon name="chevron-right" size={16} className="opacity-60" /></span>
                         </div>
@@ -1699,7 +1722,7 @@
 
             return (
                 <div className="mobile-container">
-                    <div className={`absolute inset-0 overflow-hidden hide-scrollbar ${showNav ? 'pb-8' : ''}`}>
+                    <div className={`absolute inset-0 overflow-y-auto hide-scrollbar ${showNav ? 'pb-8' : ''}`}>
                         {renderView()}
                     </div>
                     {showNav && <BottomNav active={getActiveNav()} setView={setView} />}
