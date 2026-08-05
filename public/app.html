@@ -1362,52 +1362,68 @@
         );
 
         // --- 12. 个人中心 (Me) ---
-        const MePage = ({ setView }) => (
-            <div className="p-6 pb-28 space-y-8 bg-[#F9F8F6] min-h-screen">
-                <header className="mt-2">
-                    <h1 className="text-[28px] text-[#332A24] font-bold">Me</h1>
-                    <p className="text-[13px] text-secondary mt-1">Your profile and settings.</p>
-                </header>
+        const MePage = ({ setView }) => {
+            const spaceItems = [
+                { label: 'Personal Health Record', value: 'Edit', view: 'health_record' },
+                { label: 'My Constitution Report', value: 'Latest: Cold', view: 'constitution_report' },
+                { label: 'My Collection', value: '8 saved', view: 'my_collection' },
+                { label: 'Privacy Settings', value: 'Local data', view: 'privacy_settings' }
+            ];
 
-                <div className="flex items-center gap-5 bg-[#E4ECD7] p-5 rounded-[28px]">
-                    <div className="w-20 h-24 rounded-[20px] bg-white overflow-hidden shadow-sm">
-                        <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=200" alt="avatar" className="w-full h-full object-cover" />
-                    </div>
-                    <div className="flex-1">
-                        <h2 className="text-[22px] font-bold text-primary">Stella</h2>
-                        <p className="text-[12px] text-[#677353] mt-1 font-medium">23 years old - Premenstrual</p>
-                        <p className="text-[11px] text-[#677353] mt-2 leading-tight w-4/5">Next period expected: August 1, 2026</p>
-                    </div>
-                </div>
+            return (
+                <div className="min-h-screen bg-[#F7F3EC] px-5 pt-4 pb-[102px] text-[#3F332D]">
+                    <header className="mt-2">
+                        <h1 className="text-[30px] font-bold leading-none tracking-[-0.03em] text-[#332923]">Me</h1>
+                        <p className="mt-2 text-[13px] leading-none text-[#9A8879]">Your profile and settings.</p>
+                    </header>
 
-                <div>
-                    <h3 className="text-[18px] text-primary font-bold mb-2.5 leading-none">My space</h3>
-                    <div className="flex flex-col gap-3">
-                        <div onClick={() => setView('health_record')} className="bg-white rounded-[24px] border border-[#EAE2D8] flex items-center justify-between p-[22px] cursor-pointer hover:bg-[#FDFCFB]">
-                            <div className="flex items-center gap-4"><div className="w-5 h-5 rounded-full bg-[#E4ECD7]"></div><span className="text-[15px] font-bold text-primary">Personal Health Record</span></div>
-                            <span className="text-[13px] text-[#B8B0A8] flex items-center gap-1">Edit <Icon name="chevron-right" size={16} className="opacity-60" /></span>
-                        </div>
-                        <div onClick={() => setView('constitution_report')} className="h-[68.1px] bg-white rounded-[24px] border border-[#EAE2D8] flex items-center justify-between px-[22px] py-0 cursor-pointer hover:bg-[#FDFCFB]">
-                            <div className="flex items-center gap-4"><div className="w-5 h-5 rounded-full bg-[#E4ECD7]"></div><span className="text-[15px] font-bold text-primary">My Constitution Report</span></div>
-                            <span className="text-[13px] text-[#B8B0A8] flex items-center gap-1">Latest: Cold <Icon name="chevron-right" size={16} className="opacity-60" /></span>
-                        </div>
-                        <div onClick={() => setView('my_collection')} className="bg-white rounded-[24px] border border-[#EAE2D8] flex items-center justify-between p-[22px] cursor-pointer hover:bg-[#FDFCFB]">
-                            <div className="flex items-center gap-4"><div className="w-5 h-5 rounded-full bg-[#E4ECD7]"></div><span className="text-[15px] font-bold text-primary">My Collection</span></div>
-                            <span className="text-[13px] text-[#B8B0A8] flex items-center gap-1">8 saved <Icon name="chevron-right" size={16} className="opacity-60" /></span>
-                        </div>
-                        <div onClick={() => setView('privacy_settings')} className="bg-white rounded-[24px] border border-[#EAE2D8] flex items-center justify-between p-[22px] cursor-pointer hover:bg-[#FDFCFB]">
-                            <div className="flex items-center gap-4"><div className="w-5 h-5 rounded-full bg-[#E4ECD7]"></div><span className="text-[15px] font-bold text-primary">Privacy Settings</span></div>
-                            <span className="text-[13px] text-[#B8B0A8] flex items-center gap-1">Local data <Icon name="chevron-right" size={16} className="opacity-60" /></span>
+                    <div className="mt-4 rounded-[28px] border border-[#D9E3CB] bg-[#DCE8CD] p-4 shadow-[0_6px_18px_rgba(144,119,92,0.08)]">
+                        <div className="flex items-center gap-4">
+                            <div className="h-[132px] w-[108px] shrink-0 overflow-hidden rounded-[18px] bg-[#ECE6DC] shadow-[0_2px_10px_rgba(82,67,50,0.08)]">
+                                <img src="/src/picture/me.JPG" alt="Stella profile" className="h-full w-full object-cover object-center" />
+                            </div>
+                            <div className="flex-1 pr-1">
+                                <div className="flex items-start justify-between gap-3">
+                                    <div>
+                                        <h2 className="text-[24px] font-bold leading-tight text-[#4A3C35]">Stella</h2>
+                                        <p className="mt-2 text-[15px] font-semibold leading-tight text-[#8C6F5E]">23 years old - Premenstrual</p>
+                                        <p className="mt-3 max-w-[185px] text-[13px] leading-[1.34] text-[#8C6F5E]">Next period expected: July 14, 2026</p>
+                                    </div>
+                                    <Icon name="chevron-right" size={18} className="mt-1 shrink-0 text-[#B79E8A]" />
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div className="bg-[#FDF8E7] p-6 rounded-[24px]">
-                    <h4 className="font-bold text-[15px] text-[#5C4F2A] mb-2">Gentle reminder</h4>
-                    <p className="text-[12px] text-[#8C7A4A] leading-relaxed">Your report and test results are wellness references, not medical diagnosis.</p>
+                    <section className="mt-5">
+                        <h3 className="mb-3 text-[18px] font-bold leading-none text-[#332923]">My space</h3>
+                        <div className="space-y-3">
+                            {spaceItems.map((item) => (
+                                <button
+                                    key={item.label}
+                                    onClick={() => setView(item.view)}
+                                    className="flex h-[68.1px] w-full items-center justify-between rounded-[20px] border border-[#E7DBCF] bg-[#FFFCF8] px-4 text-left shadow-[0_2px_10px_rgba(115,90,67,0.04)] transition-colors hover:bg-[#FFF9F2]"
+                                >
+                                    <div className="flex min-w-0 items-center gap-3">
+                                        <div className="h-6 w-6 shrink-0 rounded-full bg-[#DCE9D1]" />
+                                        <span className="truncate text-[15px] font-bold text-[#4A3C35]">{item.label}</span>
+                                    </div>
+                                    <div className="flex shrink-0 items-center gap-1.5 text-[#C2A896]">
+                                        <span className="text-[13px]">{item.value}</span>
+                                        <Icon name="chevron-right" size={16} className="text-[#C2A896]" />
+                                    </div>
+                                </button>
+                            ))}
+                        </div>
+                    </section>
+
+                    <div className="mt-5 rounded-[24px] border border-[#F0DEA8] bg-[#F5EAB7] px-5 py-4 shadow-[0_6px_16px_rgba(160,133,94,0.07)]">
+                        <h4 className="text-[15px] font-bold text-[#59472D]">Gentle reminder</h4>
+                        <p className="mt-2 max-w-[260px] text-[12px] leading-[1.38] text-[#7D694E]">Your report and test results are wellness references, not medical diagnosis.</p>
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        };
 
         const formatDisplayDate = (dateStr) => {
             if (!dateStr) return '';
@@ -1419,107 +1435,126 @@
         };
 
         // --- 13. Health Record ---
-        const HealthRecordPage = ({ goBack, userProfile }) => (
-            <div className="p-6 pb-28 bg-[#F9F8F6] min-h-screen">
-                <header className="flex items-center mt-2 mb-8 gap-4">
-                    <BackButton onClick={goBack} />
-                    <div className="flex-1 flex justify-between items-center">
-                        <div>
-                            <h1 className="text-[22px] font-bold text-[#332A24] leading-tight">Health Record</h1>
-                            <p className="text-[12px] text-secondary mt-0.5">View and edit your core cycle profile.</p>
+        const HealthRecordPage = ({ goBack, userProfile }) => {
+            const profileCards = [
+                { label: 'Birthday', val: formatDisplayDate(userProfile.birthday) },
+                { label: 'Height', val: userProfile.height },
+                { label: 'Weight', val: userProfile.weight },
+                { label: 'Period length', val: userProfile.periodLength },
+                { label: 'Cycle length', val: userProfile.cycleLength },
+                { label: 'Last start', val: formatDisplayDate(userProfile.lastStart) }
+            ];
+
+            const historyItems = [
+                { date: 'Jun 25 - Jun 30', desc: '6 days - mild cramps' },
+                { date: 'May 23 - Jun 30', desc: '7 days - regular' },
+                { date: 'Apr 30 - May 5', desc: '6 days - low mood' },
+                { date: 'Apr 1 - Apr 6', desc: '6 days - heavier flow' }
+            ];
+
+            return (
+                <div className="min-h-screen bg-[#F7F3EC] px-5 pt-4 pb-[96px] text-[#4A3C35]">
+                    <header className="mt-1 flex items-start justify-between gap-4">
+                        <div className="flex items-start gap-3">
+                            <BackButton onClick={goBack} />
+                            <div className="pt-0.5">
+                                <h1 className="text-[28px] font-bold leading-none tracking-[-0.03em] text-[#3A2F2A]">Health Record</h1>
+                                <p className="mt-2 text-[13px] leading-none text-[#A38F80]">View and edit your core cycle profile.</p>
+                            </div>
                         </div>
-                        <span className="text-[12px] text-[#8A817C] font-semibold bg-white border border-[#E8E2DD] px-4 py-1.5 rounded-full shadow-sm">Edit</span>
-                    </div>
-                </header>
+                        <button className="mt-1 rounded-full border border-[#E7DCCF] bg-[#FFF9F2] px-4 py-2 text-[13px] font-semibold text-[#A58A79] shadow-[0_2px_8px_rgba(132,109,86,0.06)]">
+                            Edit
+                        </button>
+                    </header>
 
-                <div className="grid grid-cols-2 gap-4 mb-8">
-                    {[
-                        { label: 'Birthday', val: formatDisplayDate(userProfile.birthday) }, 
-                        { label: 'Height', val: userProfile.height },
-                        { label: 'Weight', val: userProfile.weight }, 
-                        { label: 'Period length', val: userProfile.periodLength },
-                        { label: 'Cycle length', val: userProfile.cycleLength }, 
-                        { label: 'Last start', val: formatDisplayDate(userProfile.lastStart) }
-                    ].map(item => (
-                        <div key={item.label} className="bg-white p-5 rounded-[20px] border border-[#EAE2D8]">
-                            <p className="text-[11px] text-[#B8AEA8] mb-1.5 font-medium">{item.label}</p>
-                            <p className="text-[15px] font-bold text-[#4A3C35]">{item.val}</p>
-                        </div>
-                    ))}
-                </div>
-
-                <h3 className="text-[18px] text-[#332A24] font-bold mb-4">Record history</h3>
-                <div className="space-y-3 mb-10">
-                    {[
-                        { date: 'Jun 25 - Jun 30', desc: '6 days - mild cramps' },
-                        { date: 'May 28 - Jun 2', desc: '6 days - regular' },
-                        { date: 'Apr 30 - May 5', desc: '6 days - low mood' },
-                        { date: 'Apr 1 - Apr 6', desc: '6 days - heavier flow' }
-                    ].map(item => (
-                        <div key={item.date} className="bg-white rounded-[20px] border border-[#EAE2D8] p-5 flex justify-between items-center">
-                            <span className="font-bold text-[14px] text-[#4A3C35]">{item.date}</span>
-                            <span className="text-[12px] text-[#A0938A]">{item.desc}</span>
-                        </div>
-                    ))}
-                </div>
-                
-                <button className="w-full bg-[#8C6D58] text-white py-[18px] rounded-[24px] font-bold text-[15px] tracking-wide">
-                    Update Profile Details
-                </button>
-            </div>
-        );
-
-        // --- 14. Constitution Report ---
-        const ConstitutionReportPage = ({ setView, goBack }) => (
-            <div className="p-6 pb-28 bg-[#F9F8F6] min-h-screen">
-                <header className="flex items-center mt-2 mb-6 gap-4">
-                    <BackButton onClick={goBack} />
-                    <div>
-                        <h1 className="text-[22px] font-bold text-[#332A24] leading-tight">Constitution Report</h1>
-                        <p className="text-[12px] text-secondary mt-0.5">Latest and historical test patterns.</p>
-                    </div>
-                </header>
-
-                <div className="bg-[#EFD3D7] p-6 rounded-[28px] relative mb-8">
-                    <p className="text-[11px] text-[#A8888D] mb-1 font-semibold uppercase tracking-wider">Latest result</p>
-                    <h2 className="text-[24px] font-bold text-primary mb-3">Cold Stagnation</h2>
-                    <p className="text-[12px] text-[#8C6D72] leading-relaxed w-[75%]">Main signs: cold hands, darker flow, fatigue before period, mild backache.</p>
-                    <div className="absolute right-6 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-[#F9F8F6] border-4 border-[#C7E3CD] flex items-center justify-center">
-                        <span className="font-bold text-[14px] text-primary">82%</span>
-                    </div>
-                </div>
-
-                <div className="mb-8">
-                    <h3 className="text-[18px] text-primary font-bold mb-4">Changes over time</h3>
-                    <div className="bg-white p-5 rounded-[24px] border border-[#EAE2D8]">
-                        <div className="flex items-end justify-around h-[100px] pb-2 border-b border-[#F0EBE6] relative">
-                            <div className="absolute w-full h-[1px] bg-[#F5F2ED] bottom-[30%]"></div>
-                            <div className="absolute w-full h-[1px] bg-[#F5F2ED] bottom-[60%]"></div>
-                            {[{ h: '40%', color: 'bg-[#DCA3A6]' }, { h: '70%', color: 'bg-[#C9A063]' }, { h: '50%', color: 'bg-[#DCA3A6]' }, { h: '85%', color: 'bg-[#C9A063]' }, { h: '60%', color: 'bg-[#DCA3A6]' }, { h: '95%', color: 'bg-[#C9A063]' }].map((bar, i) => (<div key={i} className={`w-5 rounded-full ${bar.color} relative z-10`} style={{ height: bar.h }}></div>))}
-                        </div>
-                        <div className="flex justify-around mt-3 text-[10px] text-[#B8AEA8] font-medium"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span></div>
-                    </div>
-                </div>
-
-                <div>
-                    <h3 className="text-[18px] text-primary font-bold mb-4">History</h3>
-                    <div className="space-y-3 mb-8">
-                        {[
-                            { date: 'Jul 9, 2026', type: 'Cold Stagnation', pct: '82%' },
-                            { date: 'May 18, 2026', type: 'Qi-Blood Deficiency', pct: '64%' },
-                            { date: 'Mar 2, 2026', type: 'Qi Stagnation', pct: '58%' }
-                        ].map(item => (
-                            <div key={item.date} className="bg-white rounded-[20px] border border-[#EAE2D8] p-5 flex justify-between items-center">
-                                <span className="text-[12px] text-[#A0938A]">{item.date}</span>
-                                <span className="font-bold text-[14px] text-[#4A3C35]">{item.type} - {item.pct}</span>
+                    <div className="mt-5 grid grid-cols-2 gap-3.5">
+                        {profileCards.map((item) => (
+                            <div key={item.label} className="min-h-[78px] rounded-[20px] border border-[#E7DCCF] bg-[#FFFDF9] px-4 py-3 shadow-[0_2px_10px_rgba(122,96,74,0.04)]">
+                                <p className="text-[11px] font-semibold leading-none text-[#BAA79A]">{item.label}</p>
+                                <p className="mt-3 text-[18px] font-bold leading-none text-[#4A3C35]">{item.val}</p>
                             </div>
                         ))}
                     </div>
-                    
-                    <p className="text-[12px] text-secondary text-center px-4 mb-6 leading-relaxed">
-                        Advice trend: keep warm breakfasts, avoid extreme restriction, and retest after two full cycles.
-                    </p>
-                    <button onClick={() => setView('test')} className="w-full bg-[#8C6D58] text-white py-[18px] rounded-[24px] font-bold text-[15px] tracking-wide">
+
+                    <section className="mt-8">
+                        <h3 className="mb-4 text-[20px] font-bold leading-none text-[#3A2F2A]">Record history</h3>
+                        <div className="space-y-3">
+                            {historyItems.map((item) => (
+                                <div key={item.date} className="flex min-h-[66px] items-center justify-between rounded-[18px] border border-[#E7DCCF] bg-[#FFFDF9] px-5 shadow-[0_2px_10px_rgba(122,96,74,0.035)]">
+                                    <span className="text-[14px] font-bold text-[#4A3C35]">{item.date}</span>
+                                    <span className="text-[12px] text-[#A59184]">{item.desc}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    <button className="mt-10 w-full rounded-full bg-[#8C6D58] py-[18px] text-[15px] font-bold text-white shadow-[0_8px_18px_rgba(140,109,88,0.18)] active:scale-[0.99]">
+                        Update Profile Details
+                    </button>
+                </div>
+            );
+        };
+
+        // --- 14. Constitution Report ---
+        const ConstitutionReportPage = ({ setView, goBack }) => (
+            <div className="h-full overflow-hidden bg-[#F7F3EC] px-5 pt-4 pb-4 text-[#4A3C35]">
+                <div className="flex h-full flex-col">
+                    <header className="mt-1 flex items-start gap-3 shrink-0">
+                        <BackButton onClick={goBack} />
+                        <div className="pt-0.5">
+                            <h1 className="text-[24px] font-bold leading-none tracking-[-0.03em] text-[#3A2F2A]">Constitution Report</h1>
+                            <p className="mt-1.5 text-[12px] leading-none text-[#A38F80]">Latest and historical test patterns.</p>
+                        </div>
+                    </header>
+
+                    <div className="mt-4 shrink-0 rounded-[24px] bg-[#E9C5CB] px-4 py-4 shadow-[0_6px_18px_rgba(142,109,87,0.08)]">
+                        <div className="flex items-center justify-between gap-4">
+                            <div className="min-w-0 flex-1">
+                                <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#A9878C]">Latest result</p>
+                                <h2 className="mt-2 text-[21px] font-bold leading-none text-[#4A3C35]">Cold Stagnation</h2>
+                                <p className="mt-3 max-w-[210px] text-[12px] leading-[1.34] text-[#8E6F76]">Main signs: cold hands, darker flow, fatigue before period, mild backache.</p>
+                            </div>
+                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-[4px] border-[#D2E5C7] bg-[#FFF9F2]">
+                                <span className="text-[13px] font-bold text-[#4A3C35]">82%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <section className="mt-4 shrink-0">
+                        <h3 className="mb-3 text-[18px] font-bold leading-none text-[#3A2F2A]">Changes over time</h3>
+                        <div className="rounded-[22px] border border-[#E7DCCF] bg-[#FFFCF8] px-4 py-3 shadow-[0_2px_10px_rgba(122,96,74,0.04)]">
+                            <div className="relative flex h-[90px] items-end justify-around border-b border-[#F1EAE2] pb-2">
+                                <div className="absolute bottom-[30%] h-px w-full bg-[#F5F2ED]"></div>
+                                <div className="absolute bottom-[60%] h-px w-full bg-[#F5F2ED]"></div>
+                                {[{ h: '40%', color: 'bg-[#DCA3A6]' }, { h: '70%', color: 'bg-[#C9A063]' }, { h: '50%', color: 'bg-[#DCA3A6]' }, { h: '85%', color: 'bg-[#C9A063]' }, { h: '60%', color: 'bg-[#DCA3A6]' }, { h: '95%', color: 'bg-[#C9A063]' }].map((bar, i) => (<div key={i} className={`relative z-10 w-5 rounded-full ${bar.color}`} style={{ height: bar.h }}></div>))}
+                            </div>
+                            <div className="mt-2 flex justify-around text-[10px] font-medium text-[#B8AEA8]"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span></div>
+                        </div>
+                    </section>
+
+                    <section className="mt-4 shrink-0">
+                        <h3 className="mb-3 text-[18px] font-bold leading-none text-[#3A2F2A]">History</h3>
+                        <div className="space-y-2.5">
+                            {[
+                                { date: 'Jul 9, 2026', type: 'Cold Stagnation', pct: '82%' },
+                                { date: 'May 18, 2026', type: 'Qi-Blood Deficiency', pct: '64%' },
+                                { date: 'Mar 2, 2026', type: 'Qi Stagnation', pct: '58%' }
+                            ].map(item => (
+                                <div key={item.date} className="flex h-[58px] items-center justify-between rounded-[16px] border border-[#E7DCCF] bg-[#FFFCF8] px-4 shadow-[0_2px_10px_rgba(122,96,74,0.035)]">
+                                    <span className="text-[12px] text-[#A0938A]">{item.date}</span>
+                                    <span className="text-[13px] font-bold text-[#4A3C35]">{item.type} - {item.pct}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    <div className="mt-3 shrink-0 px-1">
+                        <p className="text-center text-[11px] leading-[1.35] text-[#8E7B71]">
+                            Advice trend: keep warm breakfasts, avoid extreme restriction, and retest after two full cycles.
+                        </p>
+                    </div>
+
+                    <button onClick={() => setView('test')} className="mt-4 shrink-0 rounded-full bg-[#8C6D58] py-[15px] text-[14px] font-bold text-white shadow-[0_8px_18px_rgba(140,109,88,0.18)] active:scale-[0.99]">
                         Retake Test
                     </button>
                 </div>
@@ -1530,44 +1565,56 @@
         const MyCollectionPage = ({ goBack }) => {
             const [selectedTab, setSelectedTab] = useState('Foods');
 
+            const collectionItems = [
+                { img: '/src/picture/red date ginger tea.png', title: 'Red Date Ginger Tea', tag: 'Warm - Tea' },
+                { img: '/src/picture/eight-treasure.png', title: 'Yam Millet Porridge', tag: 'Soft - Recipe' },
+                { img: '/src/picture/how do i use a.png', title: 'How do I use a sanitary pad?', tag: 'Education - 4 min' },
+                { img: '/src/picture/what are qi.png', title: 'What are Qi and Blood?', tag: 'TCM - 8 min' }
+            ];
+
             return (
-                <div className="p-6 pb-28 bg-[#F9F8F6] min-h-screen">
-                    <header className="flex items-center mt-2 mb-6 gap-4">
-                        <BackButton onClick={goBack} />
-                        <div>
-                            <h1 className="text-[22px] font-bold text-[#332A24] leading-tight">My Collection</h1>
-                            <p className="text-[12px] text-secondary mt-0.5">Saved foods, recipes, and lessons.</p>
-                        </div>
-                    </header>
-
-                    <div className="flex gap-2 mb-6">
-                        {['Foods', 'Recipes', 'Articles'].map(tab => (
-                            <Pill key={tab} label={tab} selected={selectedTab === tab} onClick={() => setSelectedTab(tab)} />
-                        ))}
-                    </div>
-
-                    <div className="space-y-4 mb-6">
-                        {[
-                            { img: 'https://images.unsplash.com/photo-1594911772125-07fc7a2d8d9f?auto=format&fit=crop&q=80&w=200', title: 'Red Date Ginger Tea', tag: 'Warm - Tea' },
-                            { img: 'https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&q=80&w=200', title: 'Yam Millet Porridge', tag: 'Soft - Recipe' },
-                            { img: 'https://images.unsplash.com/photo-1616400619175-5da9a180d9ce?auto=format&fit=crop&q=80&w=200', title: 'How do I use a sanitary pad?', tag: 'Education - 4 min' },
-                            { img: 'https://images.unsplash.com/photo-1596547609652-9cb5d8d739bb?auto=format&fit=crop&q=80&w=200', title: 'What are Qi and Blood?', tag: 'TCM - 8 min' }
-                        ].map(item => (
-                            <div key={item.title} className="bg-white rounded-[24px] p-3 flex items-center gap-4 border border-[#EAE2D8]">
-                                <img src={item.img} className="w-16 h-16 rounded-[16px] object-cover" />
-                                <div className="flex-1">
-                                    <h4 className="text-[14px] font-bold text-primary leading-tight mb-1">{item.title}</h4>
-                                    <p className="text-[11px] text-[#A0938A]">{item.tag}</p>
-                                </div>
-                                <div className="px-3"><Icon name="heart" size={18} fill="#DCA3A6" className="text-[#DCA3A6]" /></div>
+                <div className="h-full overflow-hidden bg-[#F7F3EC] px-5 pt-4 pb-[94px] text-[#4A3C35]">
+                    <div className="flex h-full flex-col">
+                        <header className="mt-1 flex items-start gap-3 shrink-0">
+                            <BackButton onClick={goBack} />
+                            <div className="pt-0.5">
+                                <h1 className="text-[24px] font-bold leading-none tracking-[-0.03em] text-[#3A2F2A]">My Collection</h1>
+                                <p className="mt-1.5 text-[12px] leading-none text-[#A38F80]">Saved foods, recipes, and lessons.</p>
                             </div>
-                        ))}
-                    </div>
+                        </header>
 
-                    <div className="bg-[#DCE7D3] p-6 rounded-[24px] flex flex-col items-center text-center mt-8">
-                        <Icon name="heart" size={24} className="text-[#8C7A6D] mb-3" />
-                        <h4 className="font-bold text-[14px] text-[#3B462C] mb-1">Empty state preview</h4>
-                        <p className="text-[12px] text-[#418E92] underline decoration-[#418E92] decoration-1 underline-offset-2 leading-relaxed w-[90%] cursor-pointer">If you remove all saved items, helpful foods and articles will appear here after you tap the heart icon.</p>
+                        <div className="mt-4 flex shrink-0 gap-3">
+                            {['Foods', 'Recipes', 'Articles'].map(tab => (
+                                tab === 'Recipes' ? (
+                                    <div key={tab} className="h-[32px] flex-1 rounded-full border border-[#E5DCCC] bg-[#FFFDF9] px-4 text-[12px] font-semibold text-[#A38F80] flex items-center justify-center">
+                                        {tab}
+                                    </div>
+                                ) : (
+                                    <button key={tab} onClick={() => setSelectedTab(tab)} className={`h-[32px] flex-1 rounded-full border px-4 text-[12px] font-semibold transition-colors ${selectedTab === tab ? 'border-[#8F6D57] bg-[#8F6D57] text-white shadow-[0_4px_10px_rgba(143,109,87,0.18)]' : 'border-[#E5DCCC] bg-[#FFFDF9] text-[#A38F80]'}`}>
+                                        {tab}
+                                    </button>
+                                )
+                            ))}
+                        </div>
+
+                        <div className="mt-4 space-y-3 shrink-0">
+                            {collectionItems.map(item => (
+                                <div key={item.title} className="flex h-[90px] items-center gap-3 rounded-[22px] border border-[#E7DCCF] bg-[#FFFCF8] p-2.5 shadow-[0_2px_10px_rgba(122,96,74,0.04)]">
+                                    <img src={item.img} alt={item.title} className="h-[70px] w-[70px] shrink-0 rounded-[16px] object-cover" />
+                                    <div className="min-w-0 flex-1">
+                                        <h4 className="truncate text-[14px] font-bold leading-tight text-[#4A3C35]">{item.title}</h4>
+                                        <p className="mt-1 text-[11px] text-[#C59C73]">{item.tag}</p>
+                                    </div>
+                                    <Icon name="heart" size={19} fill="#DCA3A6" className="shrink-0 text-[#DCA3A6]" />
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="mt-auto shrink-0 rounded-[24px] bg-[#DCE7D3] px-5 py-5 text-center shadow-[0_6px_18px_rgba(144,119,92,0.08)]">
+                            <Icon name="heart" size={26} className="mx-auto mb-2 text-[#8C7A6D]" />
+                            <h4 className="text-[13px] font-bold text-[#3B462C]">Empty state preview</h4>
+                            <p className="mx-auto mt-1 max-w-[255px] text-[11px] leading-[1.35] text-[#4E6F74]">If you remove all saved items, helpful foods and articles will appear here after you tap the heart icon.</p>
+                        </div>
                     </div>
                 </div>
             );
@@ -1578,64 +1625,73 @@
             const [toggles, setToggles] = useState({ period: true, diet: true, notif: false });
             const [showModal, setShowModal] = useState(false);
 
+            const documentRows = [
+                { label: 'Privacy Policy', value: '', action: 'chevron-right' },
+                { label: 'User Agreement', value: '', action: 'chevron-right' },
+                { label: 'Export Data', value: 'CSV', action: 'chevron-right' },
+                { label: 'Clear Local Records', value: 'Confirm', action: 'chevron-right', danger: true, onClick: () => setShowModal(true) }
+            ];
+
             return (
-                <div className="p-6 pb-28 bg-[#F9F8F6] min-h-screen relative">
-                    <header className="flex items-center mt-2 mb-6 gap-4">
-                        <BackButton onClick={goBack} />
-                        <div>
-                            <h1 className="text-[22px] font-bold text-[#332A24] leading-tight">Privacy Settings</h1>
-                            <p className="text-[12px] text-secondary mt-0.5">Control reminders and local data.</p>
-                        </div>
-                    </header>
+                <div className="h-full overflow-hidden bg-[#F7F3EC] px-5 pt-4 pb-4 text-[#4A3C35] relative">
+                    <div className="flex h-full flex-col">
+                        <header className="mt-1 flex items-start gap-3 shrink-0">
+                            <BackButton onClick={goBack} />
+                            <div className="pt-0.5">
+                                <h1 className="text-[24px] font-bold leading-none tracking-[-0.03em] text-[#3A2F2A]">Privacy Settings</h1>
+                                <p className="mt-1.5 text-[12px] leading-none text-[#A38F80]">Control reminders and local data.</p>
+                            </div>
+                        </header>
 
-                    <div className="space-y-3 mb-8">
-                        <div className="bg-[#F2EFEA] rounded-[20px] p-5 flex items-center justify-between">
-                            <span className="font-bold text-[15px] text-[#4A3C35]">Period reminder</span>
-                            <Toggle active={toggles.period} onClick={() => setToggles({...toggles, period: !toggles.period})} />
+                        <div className="mt-4 space-y-3 shrink-0">
+                            {[
+                                { label: 'Period reminder', key: 'period' },
+                                { label: 'Diet suggestion reminder', key: 'diet' },
+                                { label: 'Notification reminders', key: 'notif' }
+                            ].map((item) => (
+                                <div key={item.key} className="flex h-[70px] items-center justify-between rounded-[16px] border border-[#E7DCCF] bg-[#FFFCF8] px-4 shadow-[0_2px_10px_rgba(122,96,74,0.04)]">
+                                    <span className="text-[14px] font-bold text-[#4A3C35]">{item.label}</span>
+                                    <Toggle active={toggles[item.key]} onClick={() => setToggles({...toggles, [item.key]: !toggles[item.key]})} />
+                                </div>
+                            ))}
                         </div>
-                        <div className="bg-[#F2EFEA] rounded-[20px] p-5 flex items-center justify-between">
-                            <span className="font-bold text-[15px] text-[#4A3C35]">Diet suggestion reminder</span>
-                            <Toggle active={toggles.diet} onClick={() => setToggles({...toggles, diet: !toggles.diet})} />
-                        </div>
-                        <div className="bg-[#F2EFEA] rounded-[20px] p-5 flex items-center justify-between">
-                            <span className="font-bold text-[15px] text-[#4A3C35]">Notification reminders</span>
-                            <Toggle active={toggles.notif} onClick={() => setToggles({...toggles, notif: !toggles.notif})} />
-                        </div>
-                    </div>
 
-                    <h3 className="text-[18px] text-primary font-bold mb-4">Documents and data</h3>
-                    <div className="flex flex-col gap-3 mb-10">
-                        <div className="bg-transparent rounded-[24px] border border-[#EAE4D9] flex items-center justify-between p-5 cursor-pointer">
-                            <div className="flex items-center gap-4"><div className="w-[20px] h-[20px] rounded-full bg-[#DCE7D3]"></div><span className="text-[15px] font-bold text-primary">Privacy Policy</span></div>
-                            <span className="text-[14px] text-[#8A817C] font-semibold"><Icon name="chevron-right" size={18} className="opacity-80" /></span>
-                        </div>
-                        <div className="bg-transparent rounded-[24px] border border-[#EAE4D9] flex items-center justify-between p-5 cursor-pointer">
-                            <div className="flex items-center gap-4"><div className="w-[20px] h-[20px] rounded-full bg-[#DCE7D3]"></div><span className="text-[15px] font-bold text-primary">User Agreement</span></div>
-                            <span className="text-[14px] text-[#8A817C] font-semibold"><Icon name="chevron-right" size={18} className="opacity-80" /></span>
-                        </div>
-                        <div className="bg-transparent rounded-[24px] border border-[#EAE4D9] flex items-center justify-between p-5 cursor-pointer">
-                            <div className="flex items-center gap-4"><div className="w-[20px] h-[20px] rounded-full bg-[#DCE7D3]"></div><span className="text-[15px] font-bold text-primary">Export Data</span></div>
-                            <span className="text-[13px] text-[#8A817C] flex items-center gap-1 font-semibold">CSV <Icon name="chevron-right" size={18} className="opacity-80" /></span>
-                        </div>
-                        <div onClick={() => setShowModal(true)} className="bg-transparent rounded-[24px] border border-[#EAE4D9] flex items-center justify-between p-5 cursor-pointer hover:bg-[#FDFCFB]">
-                            <div className="flex items-center gap-4"><div className="w-[20px] h-[20px] rounded-full bg-[#DCE7D3]"></div><span className="text-[15px] font-bold text-primary">Clear Local Records</span></div>
-                            <span className="text-[13px] text-[#8A817C] flex items-center gap-1 font-semibold">Confirm <Icon name="chevron-right" size={18} className="opacity-80" /></span>
-                        </div>
+                        <section className="mt-4 shrink-0">
+                            <h3 className="mb-3 text-[18px] font-bold leading-none text-[#3A2F2A]">Documents and data</h3>
+                            <div className="space-y-2.5">
+                                {documentRows.map((item) => (
+                                    <div
+                                        key={item.label}
+                                        onClick={item.onClick}
+                                        className={`flex h-[70px] items-center justify-between rounded-[16px] border border-[#E7DCCF] bg-[#FFFCF8] px-4 shadow-[0_2px_10px_rgba(122,96,74,0.035)] ${item.onClick ? 'cursor-pointer' : ''}`}
+                                    >
+                                        <div className="flex min-w-0 items-center gap-3">
+                                            <div className="h-[18px] w-[18px] shrink-0 rounded-full bg-[#DCE9D1]" />
+                                            <span className={`truncate text-[14px] font-bold ${item.danger ? 'text-[#3A2F2A]' : 'text-[#4A3C35]'}`}>{item.label}</span>
+                                        </div>
+                                        <div className="flex shrink-0 items-center gap-1.5 text-[#A59184]">
+                                            {item.value ? <span className="text-[12px]">{item.value}</span> : null}
+                                            <Icon name={item.action} size={16} className="text-[#A59184]" />
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+
+                        <button className="mt-4 shrink-0 self-center rounded-[18px] bg-[#C27B7B] px-8 py-3.5 text-[14px] font-bold text-white shadow-[0_8px_18px_rgba(194,123,123,0.18)] active:scale-[0.99]">
+                            Delete Account
+                        </button>
                     </div>
-                    
-                    <button className="w-[60%] mx-auto block bg-[#C27B7B] text-white py-4 rounded-[20px] font-bold text-[15px] tracking-wide mb-4">
-                        Delete Account
-                    </button>
 
                     {showModal && (
                         <div className="absolute inset-0 z-50 flex items-center justify-center p-6">
                             <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setShowModal(false)}></div>
-                            <div className="bg-white rounded-[32px] p-8 relative z-10 text-center w-full max-w-[340px] shadow-2xl">
-                                <h2 className="text-[20px] font-bold text-[#332A24] mb-3">Clear local records?</h2>
-                                <p className="text-[13px] text-[#786D66] leading-relaxed mb-8 px-2">This removes cycle logs stored on this device. Export your data first if you need a backup.</p>
+                            <div className="relative z-10 w-full max-w-[340px] rounded-[32px] bg-white p-8 text-center shadow-2xl">
+                                <h2 className="mb-3 text-[20px] font-bold text-[#332A24]">Clear local records?</h2>
+                                <p className="mb-8 px-2 text-[13px] leading-relaxed text-[#786D66]">This removes cycle logs stored on this device. Export your data first if you need a backup.</p>
                                 <div className="flex gap-4">
-                                    <button onClick={() => setShowModal(false)} className="flex-1 py-3.5 rounded-full border border-[#C27B7B] text-[#C27B7B] font-bold text-[14px]">Cancel</button>
-                                    <button onClick={() => setShowModal(false)} className="flex-1 py-3.5 rounded-full bg-[#C27B7B] text-white font-bold text-[14px]">Clear</button>
+                                    <button onClick={() => setShowModal(false)} className="flex-1 rounded-full border border-[#C27B7B] py-3.5 text-[14px] font-bold text-[#C27B7B]">Cancel</button>
+                                    <button onClick={() => setShowModal(false)} className="flex-1 rounded-full bg-[#C27B7B] py-3.5 text-[14px] font-bold text-white">Clear</button>
                                 </div>
                             </div>
                         </div>
@@ -1717,7 +1773,7 @@
                 return view;
             };
 
-            const hideNavPages = ['loading', 'welcome', 'new_user', 'login', 'onboarding_intro', 'onboarding_profile', 'detail', 'test', 'result', 'food_detail', 'article'];
+            const hideNavPages = ['loading', 'welcome', 'new_user', 'login', 'onboarding_intro', 'onboarding_profile', 'detail', 'test', 'result', 'food_detail', 'article', 'health_record', 'constitution_report', 'privacy_settings'];
             const showNav = !hideNavPages.includes(view);
 
             return (
