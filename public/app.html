@@ -82,7 +82,7 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect } = React;
+        const { useState, useEffect, useRef } = React;
 
         const Icon = ({ name, size = 20, className = "", fill = "none" }) => {
             useEffect(() => { lucide.createIcons(); }, [name]);
@@ -1848,6 +1848,7 @@
         // --- 主容器及包裹逻辑 ---
         const App = () => {
             const [history, setHistory] = useState(['loading']);
+            const scrollContainerRef = useRef(null);
             
             const [userProfile, setUserProfile] = useState({
                 name: 'Stella',
@@ -1862,6 +1863,12 @@
             });
 
             const view = history[history.length - 1];
+
+            useEffect(() => {
+                const scrollContainer = scrollContainerRef.current;
+                if (scrollContainer) scrollContainer.scrollTop = 0;
+                window.scrollTo(0, 0);
+            }, [view]);
 
             const setView = (newView) => {
                 const bottomTabs = ['home', 'record', 'report', 'tcm', 'me'];
@@ -1926,7 +1933,7 @@
 
             return (
                 <div className="mobile-container">
-                    <div className={`absolute inset-0 overflow-y-auto hide-scrollbar ${showNav ? 'pb-8' : ''}`}>
+                    <div ref={scrollContainerRef} className={`absolute inset-0 overflow-y-auto hide-scrollbar ${showNav ? 'pb-8' : ''}`}>
                         {renderView()}
                     </div>
                     {showNav && <BottomNav active={getActiveNav()} setView={setView} />}
