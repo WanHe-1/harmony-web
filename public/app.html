@@ -1294,67 +1294,52 @@
 
         // --- 11. 文章详情页 (Article Detail) ---
         const ArticlePage = ({ goBack }) => (
-            <div className="h-screen overflow-hidden bg-[#F9F8F6] flex flex-col">
-                <div className="relative h-[125px] shrink-0 bg-[url('/src/picture/what is menstruation.png')] bg-cover bg-center rounded-b-[28px]">
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/12 via-black/0 to-transparent rounded-b-[28px]"></div>
-                    <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-50">
+            <div className="h-screen overflow-hidden bg-[#F8F4ED] text-[#4A3C35] flex flex-col">
+                <div className="relative h-[310px] shrink-0 overflow-hidden">
+                    <img src="/src/picture/what is menstruation.png" alt="Anatomical illustration of menstruation" className="absolute inset-0 h-full w-full object-cover object-center" />
+                    <div className="absolute inset-x-0 bottom-0 h-[92px] bg-gradient-to-t from-[#F8F4ED] via-[#F8F4ED]/70 to-transparent"></div>
+                    <div className="absolute top-[20px] left-[20px] right-[20px] flex items-center justify-between z-10">
                         <button
+                            type="button"
                             onClick={goBack}
-                            className="w-[42px] h-[42px] rounded-[14px] overflow-hidden bg-white/92 border border-white/70 shadow-[0_6px_16px_rgba(64,48,34,0.12)]"
+                            aria-label="Go back"
+                            className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-white/95 text-[#6C5B51] shadow-[0_4px_12px_rgba(73,47,35,0.12)]"
                         >
-                            <img src="/src/picture/what is menstruation.png" alt="What is menstruation?" className="h-full w-full object-cover" />
+                            <Icon name="chevron-left" size={25} />
                         </button>
-                        <button className="w-[32px] h-[32px] bg-white/95 rounded-full flex items-center justify-center circle-btn-shadow text-[#4A3C35]">
-                            <Icon name="heart" size={14} />
+                        <button type="button" aria-label="Save article" className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-white/95 text-[#8C6D58] shadow-[0_4px_12px_rgba(73,47,35,0.12)]">
+                            <Icon name="heart" size={19} fill="currentColor" />
                         </button>
                     </div>
                 </div>
 
-                <div className="flex-1 px-4 pt-2.5 pb-3 overflow-hidden flex flex-col gap-2">
-                    <div className="space-y-0.5">
-                        <p className="text-[10px] tracking-[0.12em] uppercase text-[#A18B7B]">First period</p>
-                        <h1 className="text-[18px] font-bold text-primary leading-tight">What is menstruation?</h1>
-                        <p className="text-[10px] text-secondary">A gentle guide to your first period</p>
+                <div className="flex-1 overflow-hidden px-[28px] pb-4">
+                    <div className="-mt-1">
+                        <h1 className="text-[25px] font-extrabold leading-tight tracking-[-0.03em] text-[#3F342F]">What is menstruation?</h1>
+                        <p className="mt-1 text-[13px] text-[#9A877D]">First period education</p>
+                        <h2 className="mt-3 text-[20px] font-extrabold leading-tight tracking-[-0.02em] text-[#493A34]">A gentle guide to your first period</h2>
+                        <p className="mt-2 text-[12px] font-medium text-[#B39E91]">6 min read - Menstrual basics</p>
                     </div>
 
-                    <div className="grid grid-cols-[1.15fr_0.85fr] gap-2">
-                        <div className="bg-white rounded-[16px] border border-[#F2E9DF] card-shadow p-2.5">
-                            <p className="text-[11px] text-[#4A3C35] leading-[1.28]">
-                                Menstruation is a natural part of the cycle. The first period can arrive at different ages, and every body has its own rhythm.
-                            </p>
-                        </div>
-                        <div className="bg-[#E4ECD7] rounded-[16px] border border-[#D8E1C8] card-shadow p-2.5 flex flex-col justify-between min-h-[78px]">
-                            <div>
-                                <p className="text-[9px] text-[#6D7A53] font-semibold">Read time</p>
-                                <p className="text-[15px] font-bold text-[#5A634E] mt-0.5">6 min</p>
-                            </div>
-                            <p className="text-[9px] text-[#6D7A53] leading-tight mt-1">Menstrual basics</p>
-                        </div>
+                    <p className="mt-5 text-[16px] font-medium leading-[1.52] text-[#8D786D]">
+                        Menstruation is a natural part of the menstrual cycle. It happens when the uterus releases its lining through the vagina. The first period can arrive at different ages, and every body has its own rhythm.
+                    </p>
+
+                    <div className="mt-6 rounded-[26px] border border-[#D5E1C7] bg-[#DCE9D0] px-[25px] py-[20px] shadow-[0_7px_18px_rgba(111,101,76,0.07)]">
+                        <h3 className="text-[17px] font-extrabold text-[#4F5143]">Key knowledge</h3>
+                        <p className="mt-2 text-[14px] font-medium leading-[1.4] text-[#7F806D]">A cycle often ranges from 21 to 35 days. Flow can look bright red, dark red, or brown. Track patterns, not perfection.</p>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-2">
-                        <div className="bg-[#EFD3D7] rounded-[14px] border border-[#E8C5CB] p-2.5">
-                            <h3 className="font-bold text-[11px] text-[#8C6D72]">Key knowledge</h3>
-                            <p className="text-[9px] text-[#8C6D72] leading-[1.28] mt-0.5">
-                                A cycle often ranges from 21 to 35 days. Track patterns, not perfection.
-                            </p>
-                        </div>
-                        <div className="bg-[#F7E7D9] rounded-[14px] border border-[#EDD6C3] p-2.5">
-                            <h3 className="font-bold text-[11px] text-[#8E715C]">Warm tip</h3>
-                            <p className="text-[9px] text-[#8E715C] leading-[1.28] mt-0.5">
-                                If bleeding is heavy or pain feels unusual, talk with a trusted adult and seek care.
-                            </p>
-                        </div>
+                    <div className="mt-4 rounded-[26px] border-2 border-[#209BE9] bg-[#E9C9CD] px-[25px] py-[20px] shadow-[0_7px_18px_rgba(111,101,76,0.07)]">
+                        <h3 className="text-[17px] font-extrabold text-[#4F4140]">Warm tip</h3>
+                        <p className="mt-2 text-[14px] font-medium leading-[1.4] text-[#866D6E]">If bleeding is extremely heavy, pain is severe, or symptoms feel unusual, talk with a trusted adult and seek medical care.</p>
                     </div>
 
-                    <div className="bg-white rounded-[16px] border border-[#F2E9DF] card-shadow p-2.5">
-                        <div className="flex items-center justify-between mb-1">
-                            <h3 className="font-bold text-[12px] text-primary">Related</h3>
-                            <span className="text-[9px] text-secondary">2 more lessons</span>
-                        </div>
-                        <div className="flex gap-1.5 flex-wrap">
-                            <Pill label="How to use a pad" compact />
-                            <Pill label="Cramps basics" compact />
+                    <div className="mt-6">
+                        <h3 className="text-[18px] font-extrabold text-[#493A34]">Related</h3>
+                        <div className="mt-3 flex gap-3">
+                            <Pill label="How to use a pad" className="flex-1" />
+                            <Pill label="Cramps basics" className="flex-1" />
                         </div>
                     </div>
                 </div>
