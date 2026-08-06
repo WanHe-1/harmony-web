@@ -122,8 +122,8 @@
                     { id: 'home', icon: '/picture/ico/today.png', label: 'Today', bg: 'bg-[#E4ECD7]' },
                     { id: 'record', icon: '/picture/ico/record.png', label: 'Record' },
                     { id: 'report', icon: '/picture/ico/report.png', label: 'Report', bg: 'bg-[#E4ECD7]' },
-                    { id: 'tcm', icon: '/src/picture/ico/TCM.png', label: 'TCM', bg: 'bg-[#E4ECD7]' },
-                    { id: 'me', icon: '/src/picture/ico/Me.png', label: 'Me', bg: 'bg-[#E4ECD7]' }
+                    { id: 'tcm', icon: '/public/picture/ico/TCM.png', label: 'TCM', bg: 'bg-[#E4ECD7]' },
+                    { id: 'me', icon: '/public/picture/ico/Me.png', label: 'Me', bg: 'bg-[#E4ECD7]' }
                 ].map(item => {
                     const isActive = active === item.id;
                     return (
@@ -167,7 +167,7 @@
                     <div className="h-[170px]" aria-hidden="true"></div>
                     <div className="flex flex-col items-center">
                         <div className="w-[96px] h-[96px] rounded-[30px] bg-white card-shadow flex items-center justify-center mb-4 border border-[#F0EBE6] overflow-hidden">
-                            <img src="/src/picture/logo.png" alt="Harmony logo" className="w-full h-full object-cover" />
+                            <img src="/public/picture/logo.png" alt="Harmony logo" className="w-full h-full object-cover" />
                         </div>
                         <h1 className="text-[24px] text-[#3A312B] font-bold tracking-tight">Welcome to Harmony</h1>
                         <p className="text-[12px] text-[#8C7A6D] mt-1.5 leading-relaxed max-w-[280px]">Gentle cycle tracking, solar-term nourishment, and wisdom in one quiet place.</p>
@@ -578,7 +578,7 @@
         const DetailPage = ({ goBack }) => (
             <div className="relative min-h-screen overflow-hidden bg-[#F5EFE6] pb-24">
                 <div className="relative h-[330px] overflow-hidden">
-                    <img src="/src/picture/today%20%20guidance2.png" alt="Today guidance" className="absolute inset-0 w-full h-full object-cover" />
+                    <img src="/public/picture/today%20%20guidance2.png" alt="Today guidance" className="absolute inset-0 w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-b from-black/8 via-black/10 to-black/28"></div>
                     <div className="absolute inset-x-0 bottom-0 h-[115px] bg-gradient-to-b from-transparent via-[#F5EFE6]/55 to-[#F5EFE6]"></div>
 
@@ -689,7 +689,7 @@
 
             return (
                 <div className="relative min-h-screen pb-28 overflow-hidden">
-                    <img src="/src/picture/record.png" alt="Record background" className="absolute inset-0 w-full h-full object-cover opacity-25 blur-[1px]" />
+                    <img src="/public/picture/record.png" alt="Record background" className="absolute inset-0 w-full h-full object-cover opacity-25 blur-[1px]" />
                     <div className="absolute inset-0 bg-[#F4EEE7]/44 backdrop-blur-[2px]"></div>
                     <div className="absolute inset-0 bg-gradient-to-b from-[#F7F1E9]/48 via-[#F6F0E9]/34 to-[#F9F8F6]/68"></div>
                     
@@ -998,7 +998,7 @@
 
                 <div className="flex-1 min-h-0 flex flex-col justify-between gap-2.5 py-2 overflow-hidden">
                     <div className="relative rounded-[24px] overflow-hidden flex-[0.95] min-h-[182px] text-white p-4 flex items-center border border-white/35 shadow-[0_18px_42px_rgba(95,78,69,0.16)]">
-                        <img src="/src/picture/your result.png" className="absolute inset-0 w-full h-full object-cover object-center scale-[1.01]" />
+                        <img src="/public/picture/your result.png" className="absolute inset-0 w-full h-full object-cover object-center scale-[1.01]" />
                         <div className="absolute inset-0 bg-gradient-to-r from-[#4A3026]/72 via-[#4A3026]/38 to-[#4A3026]/18"></div>
                         <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-white/8"></div>
                         <div className="relative z-10 w-[86%]">
@@ -1125,7 +1125,7 @@
                     title: 'Red Date Ginger Tea',
                     desc: 'Warms the stomach and comforts cold cramps.',
                     tags: ['Warm', 'Gentle'],
-                    image: '/src/picture/red%20date%20ginger%20tea.png',
+                    image: '/public/picture/red%20date%20ginger%20tea.png',
                     favorite: true,
                     clickable: true
                 },
@@ -1133,19 +1133,19 @@
                     title: 'Chinese Yam Millet Porridge',
                     desc: 'Soft breakfast for digestion and steady energy.',
                     tags: ['Digestive', 'Soft'],
-                    image: '/src/picture/eight-treasure.png'
+                    image: '/public/picture/eight-treasure.png'
                 },
                 {
                     title: 'Spinach and Pork Liver Soup',
                     desc: 'Supplement with a large amount of iron ions.',
                     tags: ['Warm', 'Supplement'],
-                    image: '/src/picture/greenn%20veg.png'
+                    image: '/public/picture/greenn%20veg.png'
                 },
                 {
                     title: 'Red Date and Lotus Seed Tea',
                     desc: 'Warms the stomach and comforts cold cramps.',
                     tags: ['Warm', 'Gentle'],
-                    image: '/src/picture/eight-treasure.png'
+                    image: '/public/picture/eight-treasure.png'
                 }
             ];
 
@@ -1185,7 +1185,7 @@
             return (
                 <div className="pb-28 min-h-screen bg-[#F7F3EC] text-[#4A3C35]">
                     <div className="relative h-[330px] overflow-hidden rounded-b-[34px]">
-                        <img src="/src/picture/solar-term foods.png" alt="Solar-term foods hero" className="absolute inset-0 h-full w-full object-cover" />
+                        <img src="/public/picture/solar-term foods.png" alt="Solar-term foods hero" className="absolute inset-0 h-full w-full object-cover" />
                         <div className="absolute inset-0 bg-gradient-to-b from-black/28 via-black/12 to-black/10"></div>
                         <div className="absolute inset-x-0 bottom-0 h-[92px] bg-gradient-to-b from-transparent via-[#F7F3EC]/50 to-[#F7F3EC]"></div>
 
@@ -1241,7 +1241,7 @@
             return (
                 <div className="relative h-screen overflow-hidden bg-[#F8F4EE] text-[#4A3C35] hide-scrollbar">
                     <div className="relative h-[288px] overflow-hidden rounded-b-[34px]">
-                        <img src="/src/picture/red date ginger tea.png" alt="Red Date Ginger Tea" className="absolute inset-0 h-full w-full object-cover" />
+                        <img src="/public/picture/red date ginger tea.png" alt="Red Date Ginger Tea" className="absolute inset-0 h-full w-full object-cover" />
                         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/18"></div>
                         <div className="absolute inset-x-0 bottom-0 h-[90px] bg-gradient-to-b from-transparent via-[#F8F4EE]/55 to-[#F8F4EE]"></div>
 
@@ -1341,39 +1341,39 @@
                 {
                     title: 'What is menstruation?',
                     minutes: '6 min',
-                    image: '/src/picture/what is menstruation.png',
+                    image: '/public/picture/what is menstruation.png',
                     variant: 'split',
                     onClick: () => setView('article')
                 },
                 {
                     title: 'How do I use a sanitary pad?',
                     minutes: '4 min',
-                    image: '/src/picture/how do i use a.png',
+                    image: '/public/picture/how do i use a.png',
                     variant: 'overlay',
                     accent: true
                 },
                 {
                     title: 'Can I bathe during my period?',
                     minutes: '5 min',
-                    image: '/src/picture/can i bathe during my period.png',
+                    image: '/public/picture/can i bathe during my period.png',
                     variant: 'overlay'
                 },
                 {
                     title: 'What is uterine cold?',
                     minutes: '7 min',
-                    image: '/src/picture/what is uterine.png',
+                    image: '/public/picture/what is uterine.png',
                     variant: 'split'
                 },
                 {
                     title: 'What are Qi and Blood?',
                     minutes: '8 min',
-                    image: '/src/picture/what are qi.png',
+                    image: '/public/picture/what are qi.png',
                     variant: 'split'
                 },
                 {
                     title: 'Period diet mistakes',
                     minutes: '7 min',
-                    image: '/src/picture/period diet mistakes.png',
+                    image: '/public/picture/period diet mistakes.png',
                     variant: 'overlay'
                 }
             ];
@@ -1447,7 +1447,7 @@
         const ArticlePage = ({ goBack }) => (
             <div className="h-screen overflow-y-auto hide-scrollbar bg-[#F8F4ED] text-[#4A3C35] flex flex-col">
                 <div className="relative h-[280px] shrink-0 overflow-hidden">
-                    <img src="/src/picture/what is menstruation.png" alt="Anatomical illustration of menstruation" className="absolute inset-0 h-full w-full object-cover object-center" />
+                    <img src="/public/picture/what is menstruation.png" alt="Anatomical illustration of menstruation" className="absolute inset-0 h-full w-full object-cover object-center" />
                     <div className="absolute inset-x-0 bottom-0 h-[88px] bg-gradient-to-t from-[#F8F4ED] via-[#F8F4ED]/70 to-transparent"></div>
                     <div className="absolute top-[18px] left-[18px] right-[18px] flex items-center justify-between z-10">
                         <button
@@ -1516,7 +1516,7 @@
                     <div className="mt-4 rounded-[28px] border border-[#D9E3CB] bg-[#DCE8CD] p-4 shadow-[0_6px_18px_rgba(144,119,92,0.08)]">
                         <div className="flex items-center gap-4">
                             <div className="h-[132px] w-[108px] shrink-0 overflow-hidden rounded-[18px] bg-[#ECE6DC] shadow-[0_2px_10px_rgba(82,67,50,0.08)]">
-                                <img src="/src/picture/me.JPG" alt="Stella profile" className="h-full w-full object-cover object-center" />
+                                <img src="/public/picture/me.JPG" alt="Stella profile" className="h-full w-full object-cover object-center" />
                             </div>
                             <div className="flex-1 pr-1">
                                 <div className="flex items-start justify-between gap-3">
@@ -1711,10 +1711,10 @@
             const [selectedTab, setSelectedTab] = useState('Foods');
 
             const collectionItems = [
-                { img: '/src/picture/red date ginger tea.png', title: 'Red Date Ginger Tea', tag: 'Warm - Tea' },
-                { img: '/src/picture/eight-treasure.png', title: 'Yam Millet Porridge', tag: 'Soft - Recipe' },
-                { img: '/src/picture/how do i use a.png', title: 'How do I use a sanitary pad?', tag: 'Education - 4 min' },
-                { img: '/src/picture/what are qi.png', title: 'What are Qi and Blood?', tag: 'TCM - 8 min' }
+                { img: '/public/picture/red date ginger tea.png', title: 'Red Date Ginger Tea', tag: 'Warm - Tea' },
+                { img: '/public/picture/eight-treasure.png', title: 'Yam Millet Porridge', tag: 'Soft - Recipe' },
+                { img: '/public/picture/how do i use a.png', title: 'How do I use a sanitary pad?', tag: 'Education - 4 min' },
+                { img: '/public/picture/what are qi.png', title: 'What are Qi and Blood?', tag: 'TCM - 8 min' }
             ];
 
             return (
