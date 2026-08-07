@@ -1176,7 +1176,7 @@
             }
         };
 
-        const FavoriteButton = ({ saved, onClick, light = false }) => (
+        const FavoriteButton = ({ saved, onClick, light = false, compact = false }) => (
             <button
                 type="button"
                 aria-label={saved ? 'Remove from collection' : 'Save to collection'}
@@ -1184,9 +1184,9 @@
                     event.stopPropagation();
                     onClick();
                 }}
-                className={`flex h-9 w-9 items-center justify-center rounded-full transition-all active:scale-90 ${light ? 'bg-white/90 shadow-[0_4px_12px_rgba(73,47,35,0.12)]' : 'bg-white/80'}`}
+                className={`flex shrink-0 items-center justify-center rounded-full transition-all active:scale-90 ${compact ? 'h-6 w-6' : 'h-9 w-9'} ${light ? 'bg-white/90 shadow-[0_4px_12px_rgba(73,47,35,0.12)]' : 'bg-white/80'}`}
             >
-                <span className={`text-[21px] leading-none ${saved ? 'text-[#D9858C]' : light ? 'text-[#8C6D58]' : 'text-[#E4A5A5]'}`} aria-hidden="true">
+                <span className={`${compact ? 'text-[18px]' : 'text-[21px]'} leading-none ${saved ? 'text-[#D9858C]' : light ? 'text-[#8C6D58]' : 'text-[#E4A5A5]'}`} aria-hidden="true">
                     {saved ? '♥' : '♡'}
                 </span>
             </button>
@@ -1477,22 +1477,26 @@
                     </div>
 
                     <h3 className="font-bold text-[18px] text-[#332A24] mt-2.5 mb-2.5">Featured lessons</h3>
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-2 auto-rows-[150px] gap-3">
                         {lessons.map(lesson =>
                             lesson.variant === 'split' ? (
                                 <button
                                     key={lesson.title}
                                     onClick={lesson.onClick}
-                                    className="text-left bg-white rounded-[24px] overflow-hidden card-shadow border border-[#F3E9DE] cursor-pointer transition-transform active:scale-[0.99]"
+                                    className="flex h-[150px] min-h-0 flex-col overflow-hidden rounded-[24px] border border-[#F3E9DE] bg-white text-left card-shadow cursor-pointer transition-transform active:scale-[0.99]"
                                 >
-                                    <div className="h-[80px] overflow-hidden">
-                                        <img src={lesson.image} alt={lesson.title} className="h-full w-full object-cover" />
+                                    <div className="h-[80px] shrink-0 overflow-hidden">
+                                        <img
+                                            src={lesson.image}
+                                            alt={lesson.title}
+                                            className={`mx-auto h-full object-cover ${['What is uterine cold?', 'What are Qi and Blood?'].includes(lesson.title) ? 'w-[150px]' : 'w-full'}`}
+                                        />
                                     </div>
-                                    <div className="px-4 py-2.5 flex flex-col justify-between min-h-[72px]">
-                                        <p className="text-[13px] font-bold text-[#332A24] leading-tight">{lesson.title}</p>
-                                        <div className="flex items-center justify-between mt-2">
-                                            <span className="text-[10px] text-secondary">{lesson.minutes}</span>
-                                            <FavoriteButton saved={Boolean(favorites[lesson.title])} onClick={() => toggleFavorite({ id: `education-${lesson.title}`, title: lesson.title, tag: `Education - ${lesson.minutes}`, img: lesson.image, view: lesson.title === 'What is menstruation?' ? 'article' : 'education' })} />
+                                    <div className="flex min-h-0 flex-1 flex-col justify-between px-4 py-1">
+                                        <p className="line-clamp-2 text-[13px] font-bold leading-tight text-[#332A24]">{lesson.title}</p>
+                                        <div className="mt-1 flex h-6 shrink-0 items-center justify-between">
+                                            <span className="text-[10px] leading-none text-secondary">{lesson.minutes}</span>
+                                            <FavoriteButton compact saved={Boolean(favorites[lesson.title])} onClick={() => toggleFavorite({ id: `education-${lesson.title}`, title: lesson.title, tag: `Education - ${lesson.minutes}`, img: lesson.image, view: lesson.title === 'What is menstruation?' ? 'article' : 'education' })} />
                                         </div>
                                     </div>
                                 </button>
@@ -1500,15 +1504,15 @@
                                 <button
                                     key={lesson.title}
                                     onClick={lesson.onClick}
-                                    className={`relative h-[152px] rounded-[24px] overflow-hidden card-shadow border cursor-pointer text-left transition-transform active:scale-[0.99] ${lesson.accent ? 'border-[#F3E9DE]' : 'border-[#F3E9DE]'}`}
+                                    className="relative flex h-[150px] min-h-0 flex-col overflow-hidden rounded-[24px] border border-[#F3E9DE] text-left card-shadow cursor-pointer transition-transform active:scale-[0.99]"
                                 >
                                     <img src={lesson.image} alt={lesson.title} className="absolute inset-0 h-full w-full object-cover" />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/18 to-transparent"></div>
-                                    <div className="absolute inset-x-0 bottom-0 p-3.5 text-white">
-                                        <p className="text-[13px] font-bold leading-tight drop-shadow-[0_1px_4px_rgba(0,0,0,0.22)]">{lesson.title}</p>
-                                        <div className="flex items-center justify-between mt-2.5">
-                                            <span className="text-[10px] text-white/80">{lesson.minutes}</span>
-                                            <FavoriteButton saved={Boolean(favorites[lesson.title])} onClick={() => toggleFavorite({ id: `education-${lesson.title}`, title: lesson.title, tag: `Education - ${lesson.minutes}`, img: lesson.image, view: lesson.title === 'What is menstruation?' ? 'article' : 'education' })} light />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent"></div>
+                                    <div className="absolute inset-x-0 bottom-0 flex min-h-[76px] flex-col justify-end p-3 text-white">
+                                        <p className="text-[12px] font-bold leading-[1.15] drop-shadow-[0_1px_4px_rgba(0,0,0,0.35)]">{lesson.title}</p>
+                                        <div className="mt-1 flex h-6 shrink-0 items-center justify-between">
+                                            <span className="text-[10px] leading-none text-white/80">{lesson.minutes}</span>
+                                            <FavoriteButton compact saved={Boolean(favorites[lesson.title])} onClick={() => toggleFavorite({ id: `education-${lesson.title}`, title: lesson.title, tag: `Education - ${lesson.minutes}`, img: lesson.image, view: lesson.title === 'What is menstruation?' ? 'article' : 'education' })} light />
                                         </div>
                                     </div>
                                 </button>
@@ -1554,19 +1558,19 @@
                         Menstruation is a natural part of the menstrual cycle. It happens when the uterus releases its lining through the vagina. The first period can arrive at different ages, and every body has its own rhythm.
                     </p>
 
-                    <div className="mt-4 rounded-[24px] border border-[#D5E1C7] bg-[#DCE9D0] px-[22px] py-[18px] shadow-[0_7px_18px_rgba(111,101,76,0.07)]">
+                    <div className="mt-2 rounded-[24px] border border-[#D5E1C7] bg-[#DCE9D0] px-[22px] py-[18px] shadow-[0_7px_18px_rgba(111,101,76,0.07)]">
                         <h3 className="text-[16px] font-extrabold text-[#4F5143]">Key knowledge</h3>
                         <p className="mt-1.5 text-[13px] font-medium leading-[1.35] text-[#7F806D]">A cycle often ranges from 21 to 35 days. Flow can look bright red, dark red, or brown. Track patterns, not perfection.</p>
                     </div>
 
-                    <div className="mt-[13px] rounded-[24px] border border-[#E6D5D1] bg-[#E9C9CD] px-[21px] py-[17px] shadow-[0_7px_18px_rgba(111,101,76,0.07)]">
+                    <div className="mt-[11px] rounded-[24px] border border-[#E6D5D1] bg-[#E9C9CD] px-[21px] py-[17px] shadow-[0_7px_18px_rgba(111,101,76,0.07)]">
                         <h3 className="text-[16px] font-extrabold text-[#4F4140]">Warm tip</h3>
                         <p className="mt-1.5 text-[13px] font-medium leading-[1.35] text-[#866D6E]">If bleeding is extremely heavy, pain is severe, or symptoms feel unusual, talk with a trusted adult and seek medical care.</p>
                     </div>
 
-                    <div className="mt-3.5">
+                    <div className="mt-.5">
                         <h3 className="text-[17px] font-extrabold text-[#493A34]">Related</h3>
-                        <div className="mt-2 flex gap-2">
+                        <div className="mt-1 flex gap-2">
                             <Pill label="How to use a pad" className="flex-1" />
                             <Pill label="Cramps basics" className="flex-1" />
                         </div>
