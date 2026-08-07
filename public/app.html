@@ -653,9 +653,7 @@
                 { title: 'Medication', options: ['None', 'Ibuprofen', 'Birth ctrl', 'Melatonin', 'Sleep aid', 'Other'] }
             ];
 
-            const [selectedDate, setSelectedDate] = useState(7);
-            const [currentMonth, setCurrentMonth] = useState(new Date(2026, 5, 1));
-            const [selections, setSelections] = useState({
+            const defaultSelections = {
                 'Cramps': 'Mild',
                 'Flow amount': 'Normal',
                 'Color': 'Dark red',
@@ -664,10 +662,50 @@
                 'Skin': 'Acne',
                 'Mood': 'Calm',
                 'Medication': 'Ibuprofen'
-            });
+            };
+            const [selectedDate, setSelectedDate] = useState(7);
+            const [currentMonth, setCurrentMonth] = useState(new Date(2026, 5, 1));
+            const [selections, setSelections] = useState(defaultSelections);
+            const [saveStatus, setSaveStatus] = useState('idle');
+            const saveTimerRef = useRef(null);
+
+            const getRecordKey = (month = currentMonth, day = selectedDate) => {
+                const monthNumber = String(month.getMonth() + 1).padStart(2, '0');
+                return `${month.getFullYear()}-${monthNumber}-${String(day).padStart(2, '0')}`;
+            };
+
+            useEffect(() => {
+                try {
+                    const records = JSON.parse(localStorage.getItem('harmony-records') || '{}');
+                    setSelections(records[getRecordKey()]?.selections || defaultSelections);
+                } catch {
+                    setSelections(defaultSelections);
+                }
+                setSaveStatus('idle');
+            }, [currentMonth, selectedDate]);
+
+            useEffect(() => () => window.clearTimeout(saveTimerRef.current), []);
 
             const handleSelect = (title, option) => {
                 setSelections(prev => ({ ...prev, [title]: option }));
+                setSaveStatus('idle');
+            };
+
+            const handleSave = () => {
+                try {
+                    const records = JSON.parse(localStorage.getItem('harmony-records') || '{}');
+                    records[getRecordKey()] = {
+                        date: getRecordKey(),
+                        selections,
+                        savedAt: new Date().toISOString()
+                    };
+                    localStorage.setItem('harmony-records', JSON.stringify(records));
+                    setSaveStatus('saved');
+                    window.clearTimeout(saveTimerRef.current);
+                    saveTimerRef.current = window.setTimeout(() => setSaveStatus('idle'), 2500);
+                } catch {
+                    setSaveStatus('error');
+                }
             };
 
             const moveMonth = (offset) => {
@@ -749,9 +787,20 @@
                             ))}
                         </div>
 
-                        <button className="w-full bg-[#8C6D58] text-white py-[18px] rounded-[24px] font-bold text-[15px] mt-10 tracking-wide">
-                            Save
+                        <button
+                            type="button"
+                            onClick={handleSave}
+                            className={`w-full py-[18px] rounded-[24px] font-bold text-[15px] mt-10 tracking-wide transition-all duration-300 active:scale-[0.98] ${saveStatus === 'saved' ? 'bg-[#7F9574] text-white shadow-[0_8px_20px_rgba(127,149,116,0.24)]' : saveStatus === 'error' ? 'bg-[#B66F69] text-white' : 'bg-[#8C6D58] text-white shadow-[0_8px_20px_rgba(140,109,88,0.2)]'}`}
+                            aria-live="polite"
+                        >
+                            <span className="flex items-center justify-center gap-2">
+                                {saveStatus === 'saved' && <span className="text-[18px] leading-none" aria-hidden="true">✓</span>}
+                                {saveStatus === 'error' ? 'Save failed — try again' : saveStatus === 'saved' ? 'Saved successfully' : 'Save'}
+                            </span>
                         </button>
+                        <p className={`mt-3 text-center text-[11px] font-medium transition-opacity duration-300 ${saveStatus === 'saved' ? 'text-[#708465] opacity-100' : 'opacity-0'}`}>
+                            Your record for {monthLabel} {selectedDate} has been saved.
+                        </p>
                     </div>
                 </div>
             );
@@ -1117,8 +1166,34 @@
             </div>
         );
 
+        const FAVORITES_STORAGE_KEY = 'harmony-favorite-articles';
+
+        const readFavoriteArticles = () => {
+            try {
+                return JSON.parse(localStorage.getItem(FAVORITES_STORAGE_KEY) || '{}');
+            } catch {
+                return {};
+            }
+        };
+
+        const FavoriteButton = ({ saved, onClick, light = false }) => (
+            <button
+                type="button"
+                aria-label={saved ? 'Remove from collection' : 'Save to collection'}
+                onClick={(event) => {
+                    event.stopPropagation();
+                    onClick();
+                }}
+                className={`flex h-9 w-9 items-center justify-center rounded-full transition-all active:scale-90 ${light ? 'bg-white/90 shadow-[0_4px_12px_rgba(73,47,35,0.12)]' : 'bg-white/80'}`}
+            >
+                <span className={`text-[21px] leading-none ${saved ? 'text-[#D9858C]' : light ? 'text-[#8C6D58]' : 'text-[#E4A5A5]'}`} aria-hidden="true">
+                    {saved ? '♥' : '♡'}
+                </span>
+            </button>
+        );
+
         // --- 9. 节气食物页 & 食谱详情页 ---
-        const FoodPage = ({ setView, goBack }) => {
+        const FoodPage = ({ setView, goBack, favorites, toggleFavorite }) => {
             const statusBars = [7, 10, 14, 11];
             const foodCards = [
                 {
@@ -1163,13 +1238,14 @@
                             <h3 className="text-[13px] font-bold leading-[1.22] tracking-[-0.015em] text-[#4A3C35]">{item.title}</h3>
                             <p className="mt-1.5 text-[11px] leading-[1.38] text-[#8A7B6F]">{item.desc}</p>
                         </div>
-                        <div className="absolute right-3.5 top-2.5">
-                            <Icon
-                                name="heart"
-                                size={18}
-                                fill={item.favorite ? '#E11414' : 'none'}
-                                className={item.favorite ? 'text-[#E11414]' : 'text-[#E24E57]'}
-                            />
+                        <div className="absolute right-2.5 top-2.5" onClick={(event) => event.stopPropagation()}>
+                            <FavoriteButton saved={Boolean(favorites[item.title])} onClick={() => toggleFavorite({
+                                id: `food-${item.title}`,
+                                title: item.title,
+                                tag: `${item.tags[0]} - Food`,
+                                img: item.image,
+                                view: item.clickable ? 'food_detail' : 'food'
+                            })} />
                         </div>
                         <div className="mt-4 flex gap-2">
                             {item.tags.map((tag) => (
@@ -1333,7 +1409,7 @@
         };
 
         // --- 10. 课程首页 (Education) ---
-        const EducationPage = ({ setView, goBack }) => {
+        const EducationPage = ({ setView, goBack, favorites, toggleFavorite }) => {
             const [selectedTab, setSelectedTab] = useState('First period');
 
             const tabs = ['First period', 'Basics', 'Cramps', 'Mood', 'TCM', 'Uterine cold', 'Qi & Blood', 'Diet myths'];
@@ -1416,7 +1492,7 @@
                                         <p className="text-[13px] font-bold text-[#332A24] leading-tight">{lesson.title}</p>
                                         <div className="flex items-center justify-between mt-2">
                                             <span className="text-[10px] text-secondary">{lesson.minutes}</span>
-                                            <Icon name="heart" size={14} className="text-[#E4A5A5]" />
+                                            <FavoriteButton saved={Boolean(favorites[lesson.title])} onClick={() => toggleFavorite({ id: `education-${lesson.title}`, title: lesson.title, tag: `Education - ${lesson.minutes}`, img: lesson.image, view: lesson.title === 'What is menstruation?' ? 'article' : 'education' })} />
                                         </div>
                                     </div>
                                 </button>
@@ -1432,7 +1508,7 @@
                                         <p className="text-[13px] font-bold leading-tight drop-shadow-[0_1px_4px_rgba(0,0,0,0.22)]">{lesson.title}</p>
                                         <div className="flex items-center justify-between mt-2.5">
                                             <span className="text-[10px] text-white/80">{lesson.minutes}</span>
-                                            <Icon name="heart" size={14} className="text-white/90" />
+                                            <FavoriteButton saved={Boolean(favorites[lesson.title])} onClick={() => toggleFavorite({ id: `education-${lesson.title}`, title: lesson.title, tag: `Education - ${lesson.minutes}`, img: lesson.image, view: lesson.title === 'What is menstruation?' ? 'article' : 'education' })} light />
                                         </div>
                                     </div>
                                 </button>
@@ -1444,7 +1520,7 @@
         };
 
         // --- 11. 文章详情页 (Article Detail) ---
-        const ArticlePage = ({ goBack }) => (
+        const ArticlePage = ({ goBack, favorites, toggleFavorite }) => (
             <div className="h-screen overflow-y-auto hide-scrollbar bg-[#F8F4ED] text-[#4A3C35] flex flex-col">
                 <div className="relative h-[280px] shrink-0 overflow-hidden">
                     <img src="/picture/what is menstruation.png" alt="Anatomical illustration of menstruation" className="absolute inset-0 h-full w-full object-cover object-center" />
@@ -1458,9 +1534,11 @@
                         >
                             <Icon name="chevron-left" size={23} />
                         </button>
-                        <button type="button" aria-label="Save article" className="flex h-[44px] w-[44px] items-center justify-center rounded-full bg-white/95 text-[#8C6D58] shadow-[0_4px_12px_rgba(73,47,35,0.12)]">
-                            <Icon name="heart" size={18} fill="currentColor" />
-                        </button>
+                        <FavoriteButton
+                            saved={Boolean(favorites['What is menstruation?'])}
+                            onClick={() => toggleFavorite({ id: 'education-What is menstruation?', title: 'What is menstruation?', tag: 'Education - 6 min', img: '/picture/what is menstruation.png', view: 'article' })}
+                            light
+                        />
                     </div>
                 </div>
 
@@ -1498,11 +1576,12 @@
         );
 
         // --- 12. 个人中心 (Me) ---
-        const MePage = ({ setView, userProfile }) => {
+        const MePage = ({ setView, userProfile, favorites }) => {
+            const savedCount = Object.keys(favorites).length;
             const spaceItems = [
                 { label: 'Personal Health Record', value: 'Edit', view: 'health_record' },
                 { label: 'My Constitution Report', value: 'Latest: Cold', view: 'constitution_report' },
-                { label: 'My Collection', value: '8 saved', view: 'my_collection' },
+                { label: 'My Collection', value: `${savedCount} saved`, view: 'my_collection' },
                 { label: 'Privacy Settings', value: 'Local data', view: 'privacy_settings' }
             ];
 
@@ -1707,15 +1786,14 @@
         );
 
         // --- 15. My Collection ---
-        const MyCollectionPage = ({ goBack }) => {
+        const MyCollectionPage = ({ goBack, favorites, toggleFavorite }) => {
             const [selectedTab, setSelectedTab] = useState('Foods');
 
-            const collectionItems = [
-                { img: '/picture/red date ginger tea.png', title: 'Red Date Ginger Tea', tag: 'Warm - Tea' },
-                { img: '/picture/eight-treasure.png', title: 'Yam Millet Porridge', tag: 'Soft - Recipe' },
-                { img: '/picture/how do i use a.png', title: 'How do I use a sanitary pad?', tag: 'Education - 4 min' },
-                { img: '/picture/what are qi.png', title: 'What are Qi and Blood?', tag: 'TCM - 8 min' }
-            ];
+            const collectionItems = Object.values(favorites).filter(item => {
+                if (selectedTab === 'Articles') return item.tag.startsWith('Education');
+                if (selectedTab === 'Recipes') return item.tag.includes('Recipe');
+                return item.tag.includes('Food') || item.tag.includes('Tea');
+            });
 
             return (
                 <div className="h-full overflow-hidden bg-[#F7F3EC] px-5 pt-4 pb-[94px] text-[#4A3C35]">
@@ -1744,15 +1822,18 @@
 
                         <div className="mt-4 space-y-3 shrink-0">
                             {collectionItems.map(item => (
-                                <div key={item.title} className="flex h-[90px] items-center gap-3 rounded-[22px] border border-[#E7DCCF] bg-[#FFFCF8] p-2.5 shadow-[0_2px_10px_rgba(122,96,74,0.04)]">
+                                <div key={item.id} className="flex h-[90px] items-center gap-3 rounded-[22px] border border-[#E7DCCF] bg-[#FFFCF8] p-2.5 shadow-[0_2px_10px_rgba(122,96,74,0.04)]">
                                     <img src={item.img} alt={item.title} className="h-[70px] w-[70px] shrink-0 rounded-[16px] object-cover" />
                                     <div className="min-w-0 flex-1">
                                         <h4 className="truncate text-[14px] font-bold leading-tight text-[#4A3C35]">{item.title}</h4>
                                         <p className="mt-1 text-[11px] text-[#C59C73]">{item.tag}</p>
                                     </div>
-                                    <Icon name="heart" size={19} fill="#DCA3A6" className="shrink-0 text-[#DCA3A6]" />
+                                    <FavoriteButton saved onClick={() => toggleFavorite(item)} />
                                 </div>
                             ))}
+                            {collectionItems.length === 0 && (
+                                <p className="rounded-[18px] border border-dashed border-[#E2D5C8] px-4 py-6 text-center text-[12px] text-[#A38F80]">No saved items in this category yet.</p>
+                            )}
                         </div>
 
                         <div className="mt-auto shrink-0 rounded-[24px] bg-[#DCE7D3] px-5 py-5 text-center shadow-[0_6px_18px_rgba(144,119,92,0.08)]">
@@ -1850,6 +1931,18 @@
             const [history, setHistory] = useState(['loading']);
             const scrollContainerRef = useRef(null);
             
+            const [favorites, setFavorites] = useState(readFavoriteArticles);
+
+            const toggleFavorite = (item) => {
+                setFavorites(prev => {
+                    const next = { ...prev };
+                    if (next[item.title]) delete next[item.title];
+                    else next[item.title] = item;
+                    localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(next));
+                    return next;
+                });
+            };
+
             const [userProfile, setUserProfile] = useState({
                 name: 'Stella',
                 age: '23',
@@ -1904,14 +1997,14 @@
                     case 'test': return <TestPage setView={setView} goBack={goBack} />;
                     case 'result': return <ResultPage setView={setView} goBack={goBack} />;
                     case 'diet': return <DietPage setView={setView} goBack={goBack} />;
-                    case 'food': return <FoodPage setView={setView} goBack={goBack} />;
+                    case 'food': return <FoodPage setView={setView} goBack={goBack} favorites={favorites} toggleFavorite={toggleFavorite} />;
                     case 'food_detail': return <FoodDetailPage goBack={goBack} />;
-                    case 'education': return <EducationPage setView={setView} goBack={goBack} />;
-                    case 'article': return <ArticlePage goBack={goBack} />;
-                    case 'me': return <MePage setView={setView} userProfile={userProfile} />;
+                    case 'education': return <EducationPage setView={setView} goBack={goBack} favorites={favorites} toggleFavorite={toggleFavorite} />;
+                    case 'article': return <ArticlePage goBack={goBack} favorites={favorites} toggleFavorite={toggleFavorite} />;
+                    case 'me': return <MePage setView={setView} userProfile={userProfile} favorites={favorites} />;
                     case 'health_record': return <HealthRecordPage goBack={goBack} setView={setView} userProfile={userProfile} />;
                     case 'constitution_report': return <ConstitutionReportPage setView={setView} goBack={goBack} />;
-                    case 'my_collection': return <MyCollectionPage goBack={goBack} />;
+                    case 'my_collection': return <MyCollectionPage goBack={goBack} favorites={favorites} toggleFavorite={toggleFavorite} />;
                     case 'privacy_settings': return <PrivacySettingsPage goBack={goBack} />;
                     default: return <HomePage setView={setView} />;
                 }
